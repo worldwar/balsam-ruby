@@ -2,10 +2,10 @@ require 'active_record'
 
 ActiveRecord::Base.establish_connection(
     :adapter => "postgresql",
-    :host => "localhost",
+    :host => "zhuran.tw",
     :database => "readinglist",
-    :user => "readinglist_dev",
-    :password => "readinglist_dev"
+    :user => "readinglist",
+    :password => "thanksallreadinglist"
 )
 
 module Balsam
