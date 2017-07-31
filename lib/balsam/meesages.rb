@@ -2,35 +2,28 @@ require 'bunny'
 require 'json'
 require 'nokogiri'
 require 'open-uri'
+require 'balsam/parser'
+require 'balsam/actor/actors'
 
 module Balsam
   class Message
     def start
       puts "start connecting..."
-      # conn = Bunny.new(:hostname => "zhuran.tw", :username => "bookreader", :password => "bookreader")
-      conn = Bunny.new("amqp://nndnyskp:5XbTiDjKSbmQ1fHGg4KUUQhIh-BLz9hL@white-swan.rmq.cloudamqp.com/nndnyskp")
+      conn = Bunny.new(:hostname => "zhuran.tw", :username => "bookreader", :password => "bookreader")
       conn.start
       puts "connected"
       ch   = conn.create_channel
       x    = ch.direct("bookreadertopic", :durable => true, :auto_delete => false)
-      q    = ch.queue("add-book", :durable => true)
-      q.bind(x, :routing_key => "add-book")
+      q    = ch.queue("add-book-gdwxcn", :durable => true)
+      q.bind(x, :routing_key => "add-book-gdwxcn")
       puts "got queue"
-
+      catalog_actor = CatalogActor.new
       begin
         q.subscribe(:block => true) do |delivery_info, properties, body|
           puts " [x] Received #{body}"
-
           request = JSON.parse(body)
-
           url = request["url"]
-          puts url
-
-          h = Nokogiri::HTML(open(url))
-
-          puts h
-          # cancel the consumer to exit
-          delivery_info.consumer.cancel
+          catalog_actor.catalog(url)
         end
       rescue Interrupt => _
         puts "connection broken"
