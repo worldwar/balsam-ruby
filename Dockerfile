@@ -1,14 +1,4 @@
-FROM ruby:2.4.1-alpine
-
-RUN apk add --update openssl
-
-RUN apk add --update git
-
-RUN apk add --update ruby-dev
-
-RUN apk add --update build-base
-
-RUN apk add --update postgresql-dev
+FROM ruby:2.4.1
 
 RUN mkdir -p /var/app
 
@@ -27,5 +17,3 @@ WORKDIR /var/app/balsam-ruby
 RUN bundle install
 
 ENTRYPOINT ["bundle", "exec", "balsam"]
-~
-~
