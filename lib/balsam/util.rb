@@ -17,5 +17,19 @@ module Balsam
       text.encode!("utf-8", :undef => :replace, :replace => "?", :invalid => :replace)
       return text
     end
+
+    def self.to_gbk(text)
+      cd = CharDet.detect(text)
+      if cd.confidence > 0.6
+        text.force_encoding(cd.encoding)
+      end
+      text.encode!("gbk", :undef => :replace, :replace => "?", :invalid => :replace)
+      return text
+    end
+
+    def self.page_utf8(url)
+      html = open(url).read
+      Nokogiri::HTML(Util.to_utf8(html))
+    end
   end
 end
