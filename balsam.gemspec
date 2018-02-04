@@ -40,7 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "nokogiri", ">= 1.8.0"
   spec.add_runtime_dependency "addressable", ">= 2.5.0"
   spec.add_runtime_dependency "activerecord", ">= 5.1.2"
-  spec.add_runtime_dependency "pg", ">= 0.21.0"
+  spec.add_runtime_dependency "pg", "~= 0.21.0"
   spec.add_runtime_dependency "celluloid", ">= 0.17.3"
   spec.add_runtime_dependency "rchardet19", ">= 1.3.7"
 end
