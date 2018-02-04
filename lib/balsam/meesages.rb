@@ -23,7 +23,7 @@ module Balsam
       puts "got queue"
       catalog_actor = CatalogActor.new
       begin
-        q.subscribe(:block => true) do |delivery_info, properties, body|
+        q.subscribe(:block => false) do |delivery_info, properties, body|
           puts " [x] Received #{body}"
           request = JSON.parse(body)
           url = request["url"]

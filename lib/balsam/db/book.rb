@@ -5,7 +5,8 @@ ActiveRecord::Base.establish_connection(
     :host => "zhuran.tw",
     :database => "readinglist",
     :user => "readinglist",
-    :password => "thanksallreadinglist"
+    :password => "thanksallreadinglist",
+    :pool => 50
 )
 
 module Balsam
